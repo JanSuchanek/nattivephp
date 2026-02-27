@@ -53,11 +53,22 @@ class Client
 
 	/**
 	 * @param array<string, mixed> $data
+	 * @return array<string, mixed>
 	 * @throws GuzzleException
 	 */
-	public function post(string $endpoint, array $data = []): void
+	public function post(string $endpoint, array $data = []): array
 	{
-		$this->http->post($endpoint, ['json' => $data]);
+		$response = $this->http->post($endpoint, ['json' => $data]);
+		$body = (string) $response->getBody();
+
+		if ($body === '') {
+			return [];
+		}
+
+		/** @var array<string, mixed> $decoded */
+		$decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+
+		return $decoded;
 	}
 
 	/**

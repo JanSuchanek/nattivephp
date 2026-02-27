@@ -262,15 +262,43 @@ public function startup(): void
 
 ## Available API Classes
 
-| Class | Methods |
-|---|---|
-| `Window` | open, close, resize, title, position, maximize, minimize, hide, show, reload |
-| `Clipboard` | read, write, clear |
-| `Notification` | send |
-| `Dialog` | open, save |
-| `Shell` | openExternal, showItemInFolder, trashItem |
-| `Screen` | primaryDisplay, allDisplays, cursorPosition |
-| `App` | quit, relaunch, hide, show |
+All classes follow the same pattern and can be injected via DI. Each PHP class includes `@see` annotations referencing the Electron TypeScript source and Laravel equivalent for easy upstream sync.
+
+| PHP Class | Electron TS Source | Laravel Facade | Key Methods |
+|---|---|---|---|
+| `Window` | `api/window.ts` | `Window` | open, close, resize, title, maximize, minimize, hide, show, reload |
+| `Menu` | `api/menu.ts` | `Menu` | set |
+| `MenuBar` | `api/menuBar.ts` | `MenuBar` | create, label, tooltip, icon, contextMenu, show, hide, resize |
+| `ContextMenu` | `api/contextMenu.ts` | `ContextMenu` | set, remove |
+| `Clipboard` | `api/clipboard.ts` | `Clipboard` | read, write, clear |
+| `Notification` | `api/notification.ts` | `Notification` | send |
+| `Dialog` | `api/dialog.ts` | `Dialog` | open, save |
+| `Alert` | `api/alert.ts` | `Alert` | message, error |
+| `Shell` | `api/shell.ts` | `Shell` | openExternal, showItemInFolder, trashItem |
+| `Screen` | `api/screen.ts` | `Screen` | primaryDisplay, allDisplays, cursorPosition |
+| `App` | `api/app.ts` | `App` | quit, relaunch, hide, show |
+| `Dock` | `api/dock.ts` | `Dock` | menu, show, hide, icon, bounce, cancelBounce, getBadge, setBadge |
+| `GlobalShortcut` | `api/globalShortcut.ts` | `GlobalShortcut` | register, unregister, isRegistered |
+| `ProgressBar` | `api/progressBar.ts` | `ProgressBar` | update |
+| `PowerMonitor` | `api/powerMonitor.ts` | `PowerMonitor` | getSystemIdleState, getSystemIdleTime, getCurrentThermalState, isOnBatteryPower |
+| `ChildProcess` | `api/childProcess.ts` | `ChildProcess` | start, startPhp, stop, restart, get, all, message |
+| `AutoUpdater` | `api/autoUpdater.ts` | `AutoUpdater` | checkForUpdates, downloadUpdate, quitAndInstall |
+| `System` | `api/system.ts` | `System` | canPromptTouchID, promptTouchID, encrypt, decrypt, getPrinters, print, printToPdf, getTheme, setTheme |
+| `Settings` | `api/settings.ts` | `Settings` | get, set, delete, clear |
+| `Broadcasting` | `api/broadcasting.ts` | `Broadcasting` | send |
+| `Debug` | `api/debug.ts` | `Debug` | log, info, warning, error |
+
+### Syncing with NativePHP/Laravel Updates
+
+Each PHP class has `@see` annotations linking to:
+1. **Electron source**: `electron-plugin/src/server/api/*.ts` — the Express API routes
+2. **Laravel facade**: corresponding NativePHP/Laravel class
+
+When upstream NativePHP adds new endpoints:
+1. Check `electron-plugin/src/server/api.ts` for new `httpServer.use()` mounts
+2. Read the corresponding `.ts` file for endpoint signatures
+3. Add matching methods to the PHP wrapper class
+4. Register in `NativePhpExtension::loadConfiguration()`
 
 ## Usage in Presenters
 

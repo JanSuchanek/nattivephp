@@ -58,6 +58,49 @@ class NativePhpExtension extends CompilerExtension
 		$builder->addDefinition($this->prefix('app'))
 			->setFactory(App::class);
 
+		// New API classes
+		$builder->addDefinition($this->prefix('menu'))
+			->setFactory(Menu::class);
+
+		$builder->addDefinition($this->prefix('menuBar'))
+			->setFactory(MenuBar::class);
+
+		$builder->addDefinition($this->prefix('globalShortcut'))
+			->setFactory(GlobalShortcut::class);
+
+		$builder->addDefinition($this->prefix('dock'))
+			->setFactory(Dock::class);
+
+		$builder->addDefinition($this->prefix('progressBar'))
+			->setFactory(ProgressBar::class);
+
+		$builder->addDefinition($this->prefix('powerMonitor'))
+			->setFactory(PowerMonitor::class);
+
+		$builder->addDefinition($this->prefix('childProcess'))
+			->setFactory(ChildProcess::class);
+
+		$builder->addDefinition($this->prefix('autoUpdater'))
+			->setFactory(AutoUpdater::class);
+
+		$builder->addDefinition($this->prefix('contextMenu'))
+			->setFactory(ContextMenu::class);
+
+		$builder->addDefinition($this->prefix('system'))
+			->setFactory(System::class);
+
+		$builder->addDefinition($this->prefix('settings'))
+			->setFactory(Settings::class);
+
+		$builder->addDefinition($this->prefix('broadcasting'))
+			->setFactory(Broadcasting::class);
+
+		$builder->addDefinition($this->prefix('alert'))
+			->setFactory(Alert::class);
+
+		$builder->addDefinition($this->prefix('debug'))
+			->setFactory(Debug::class);
+
 		$provider = is_string($config->provider) ? $config->provider : NativeAppProvider::class;
 
 		$builder->addDefinition($this->prefix('provider'))
