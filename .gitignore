@@ -1,0 +1,5 @@
+/vendor/
+/node_modules/
+/tests/temp/
+*.cache
+.phpunit.result.cache

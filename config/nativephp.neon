@@ -1,0 +1,8 @@
+# NativePHP configuration for Nette
+nativephp:
+	app_id: com.nativephp.app
+	app_name: NativePHP App
+	version: 1.0.0
+	author: ''
+	deeplink_scheme: ''
+	provider: NativePHP\Nette\NativeAppProvider

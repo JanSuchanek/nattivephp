@@ -1,0 +1,69 @@
+<?php
+
+declare(strict_types=1);
+
+namespace NativePHP\Nette;
+
+use Nette\DI\CompilerExtension;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
+
+/**
+ * Nette DI extension for NativePHP bridge.
+ * Registers all API services into the container.
+ */
+class NativePhpExtension extends CompilerExtension
+{
+	public function getConfigSchema(): Schema
+	{
+		return Expect::structure([
+			'app_id' => Expect::string('com.nativephp.app'),
+			'app_name' => Expect::string('NativePHP'),
+			'version' => Expect::string('1.0.0'),
+			'author' => Expect::string(''),
+			'deeplink_scheme' => Expect::string(''),
+			'provider' => Expect::string(NativeAppProvider::class),
+		]);
+	}
+
+	public function loadConfiguration(): void
+	{
+		$builder = $this->getContainerBuilder();
+
+		/** @var \stdClass $config */
+		$config = $this->getConfig();
+
+		// API URL and secret come from environment variables set by Electron
+		$apiUrl = (string) getenv('NATIVEPHP_API_URL') ?: 'http://localhost:4000/';
+		$secret = (string) getenv('NATIVEPHP_SECRET') ?: '';
+
+		$builder->addDefinition($this->prefix('client'))
+			->setFactory(Client::class, [$apiUrl, $secret]);
+
+		$builder->addDefinition($this->prefix('window'))
+			->setFactory(Window::class);
+
+		$builder->addDefinition($this->prefix('clipboard'))
+			->setFactory(Clipboard::class);
+
+		$builder->addDefinition($this->prefix('notification'))
+			->setFactory(Notification::class);
+
+		$builder->addDefinition($this->prefix('shell'))
+			->setFactory(Shell::class);
+
+		$builder->addDefinition($this->prefix('dialog'))
+			->setFactory(Dialog::class);
+
+		$builder->addDefinition($this->prefix('screen'))
+			->setFactory(Screen::class);
+
+		$builder->addDefinition($this->prefix('app'))
+			->setFactory(App::class);
+
+		$provider = is_string($config->provider) ? $config->provider : NativeAppProvider::class;
+
+		$builder->addDefinition($this->prefix('provider'))
+			->setFactory($provider);
+	}
+}
