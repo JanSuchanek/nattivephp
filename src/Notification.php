@@ -13,7 +13,7 @@ class Notification
 
 	public function send(string $title, string $body = ''): void
 	{
-		$this->client->post('api/notification', [
+		$this->client->post('notification', [
 			'title' => $title,
 			'body' => $body,
 		]);

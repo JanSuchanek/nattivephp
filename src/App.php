@@ -13,21 +13,21 @@ class App
 
 	public function quit(): void
 	{
-		$this->client->post('api/app/quit');
+		$this->client->post('app/quit');
 	}
 
 	public function relaunch(): void
 	{
-		$this->client->post('api/app/relaunch');
+		$this->client->post('app/relaunch');
 	}
 
 	public function hide(): void
 	{
-		$this->client->post('api/app/hide');
+		$this->client->post('app/hide');
 	}
 
 	public function show(): void
 	{
-		$this->client->post('api/app/show');
+		$this->client->post('app/show');
 	}
 }

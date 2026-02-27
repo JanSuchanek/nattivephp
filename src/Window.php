@@ -38,7 +38,7 @@ class Window
 		bool $showDevTools = false,
 		float $zoomFactor = 1.0,
 	): void {
-		$this->client->post('api/window/open', array_filter([
+		$this->client->post('window/open', array_filter([
 			'id' => $id,
 			'url' => $url,
 			'width' => $width,
@@ -71,52 +71,52 @@ class Window
 
 	public function close(string $id): void
 	{
-		$this->client->post('api/window/close', ['id' => $id]);
+		$this->client->post('window/close', ['id' => $id]);
 	}
 
 	public function resize(string $id, int $width, int $height): void
 	{
-		$this->client->post('api/window/resize', ['id' => $id, 'width' => $width, 'height' => $height]);
+		$this->client->post('window/resize', ['id' => $id, 'width' => $width, 'height' => $height]);
 	}
 
 	public function title(string $id, string $title): void
 	{
-		$this->client->post('api/window/title', ['id' => $id, 'title' => $title]);
+		$this->client->post('window/title', ['id' => $id, 'title' => $title]);
 	}
 
 	public function position(string $id, int $x, int $y): void
 	{
-		$this->client->post('api/window/position', ['id' => $id, 'x' => $x, 'y' => $y]);
+		$this->client->post('window/position', ['id' => $id, 'x' => $x, 'y' => $y]);
 	}
 
 	public function maximize(string $id): void
 	{
-		$this->client->post('api/window/maximize', ['id' => $id]);
+		$this->client->post('window/maximize', ['id' => $id]);
 	}
 
 	public function minimize(string $id): void
 	{
-		$this->client->post('api/window/minimize', ['id' => $id]);
+		$this->client->post('window/minimize', ['id' => $id]);
 	}
 
 	public function reload(string $id): void
 	{
-		$this->client->post('api/window/reload', ['id' => $id]);
+		$this->client->post('window/reload', ['id' => $id]);
 	}
 
 	public function hide(string $id): void
 	{
-		$this->client->post('api/window/hide', ['id' => $id]);
+		$this->client->post('window/hide', ['id' => $id]);
 	}
 
 	public function show(string $id): void
 	{
-		$this->client->post('api/window/show', ['id' => $id]);
+		$this->client->post('window/show', ['id' => $id]);
 	}
 
 	public function alwaysOnTop(string $id, bool $alwaysOnTop = true): void
 	{
-		$this->client->post('api/window/always-on-top', ['id' => $id, 'alwaysOnTop' => $alwaysOnTop]);
+		$this->client->post('window/always-on-top', ['id' => $id, 'alwaysOnTop' => $alwaysOnTop]);
 	}
 
 	/**
@@ -124,7 +124,7 @@ class Window
 	 */
 	public function current(): array
 	{
-		return $this->client->get('api/window/current');
+		return $this->client->get('window/current');
 	}
 
 	/**
@@ -132,6 +132,6 @@ class Window
 	 */
 	public function all(): array
 	{
-		return $this->client->get('api/window/all');
+		return $this->client->get('window/all');
 	}
 }

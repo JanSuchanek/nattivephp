@@ -16,7 +16,7 @@ class Screen
 	 */
 	public function primaryDisplay(): array
 	{
-		return $this->client->get('api/screen/primary-display');
+		return $this->client->get('screen/primary-display');
 	}
 
 	/**
@@ -24,7 +24,7 @@ class Screen
 	 */
 	public function allDisplays(): array
 	{
-		return $this->client->get('api/screen/all-displays');
+		return $this->client->get('screen/all-displays');
 	}
 
 	/**
@@ -32,6 +32,6 @@ class Screen
 	 */
 	public function cursorPosition(): array
 	{
-		return $this->client->get('api/screen/cursor-position');
+		return $this->client->get('screen/cursor-position');
 	}
 }

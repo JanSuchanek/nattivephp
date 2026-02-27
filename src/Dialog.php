@@ -21,7 +21,7 @@ class Dialog
 		array $filters = [],
 		bool $multiSelections = false,
 	): array {
-		return $this->client->get('api/dialog/open', array_filter([
+		return $this->client->get('dialog/open', array_filter([
 			'title' => $title,
 			'defaultPath' => $defaultPath,
 			'filters' => $filters === [] ? null : json_encode($filters),
@@ -36,7 +36,7 @@ class Dialog
 		string $title = 'Save',
 		?string $defaultPath = null,
 	): array {
-		return $this->client->get('api/dialog/save', array_filter([
+		return $this->client->get('dialog/save', array_filter([
 			'title' => $title,
 			'defaultPath' => $defaultPath,
 		], fn(?string $v): bool => $v !== null));

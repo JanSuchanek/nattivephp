@@ -13,16 +13,16 @@ class Shell
 
 	public function openExternal(string $url): void
 	{
-		$this->client->post('api/shell/open-external', ['url' => $url]);
+		$this->client->post('shell/open-external', ['url' => $url]);
 	}
 
 	public function showItemInFolder(string $path): void
 	{
-		$this->client->post('api/shell/show-item-in-folder', ['path' => $path]);
+		$this->client->post('shell/show-item-in-folder', ['path' => $path]);
 	}
 
 	public function trashItem(string $path): void
 	{
-		$this->client->post('api/shell/trash-item', ['path' => $path]);
+		$this->client->post('shell/trash-item', ['path' => $path]);
 	}
 }

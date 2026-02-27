@@ -33,12 +33,9 @@ class NativePhpExtension extends CompilerExtension
 		/** @var \stdClass $config */
 		$config = $this->getConfig();
 
-		// API URL and secret come from environment variables set by Electron
-		$apiUrl = (string) getenv('NATIVEPHP_API_URL') ?: 'http://localhost:4000/';
-		$secret = (string) getenv('NATIVEPHP_SECRET') ?: '';
-
+		// Client reads NATIVEPHP_API_URL and NATIVEPHP_SECRET from env at runtime
 		$builder->addDefinition($this->prefix('client'))
-			->setFactory(Client::class, [$apiUrl, $secret]);
+			->setFactory(Client::class);
 
 		$builder->addDefinition($this->prefix('window'))
 			->setFactory(Window::class);

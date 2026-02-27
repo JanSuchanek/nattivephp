@@ -13,18 +13,18 @@ class Clipboard
 
 	public function read(): string
 	{
-		$result = $this->client->get('api/clipboard/read');
+		$result = $this->client->get('clipboard/read');
 
 		return isset($result['text']) && is_string($result['text']) ? $result['text'] : '';
 	}
 
 	public function write(string $text): void
 	{
-		$this->client->post('api/clipboard/write', ['text' => $text]);
+		$this->client->post('clipboard/write', ['text' => $text]);
 	}
 
 	public function clear(): void
 	{
-		$this->client->post('api/clipboard/clear');
+		$this->client->post('clipboard/clear');
 	}
 }

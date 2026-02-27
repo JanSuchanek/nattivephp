@@ -15,8 +15,11 @@ class Client
 {
 	private readonly GuzzleClient $http;
 
-	public function __construct(string $apiUrl, string $secret, ?GuzzleClient $httpClient = null)
+	public function __construct(?GuzzleClient $httpClient = null)
 	{
+		$apiUrl = (string) getenv('NATIVEPHP_API_URL') ?: 'http://localhost:4000/api/';
+		$secret = (string) getenv('NATIVEPHP_SECRET') ?: '';
+
 		$this->http = $httpClient ?? new GuzzleClient([
 			'base_uri' => rtrim($apiUrl, '/') . '/',
 			'timeout' => 30,
