@@ -101,6 +101,23 @@ class NativePhpExtension extends CompilerExtension
 		$builder->addDefinition($this->prefix('debug'))
 			->setFactory(Debug::class);
 
+		// Event dispatcher
+		$builder->addDefinition($this->prefix('eventDispatcher'))
+			->setFactory(Events\EventDispatcher::class);
+
+		// CLI commands
+		$builder->addDefinition($this->prefix('command.serve'))
+			->setFactory(Command\NativeServeCommand::class)
+			->addTag('console.command', 'native:serve');
+
+		$builder->addDefinition($this->prefix('command.build'))
+			->setFactory(Command\NativeBuildCommand::class)
+			->addTag('console.command', 'native:build');
+
+		$builder->addDefinition($this->prefix('command.install'))
+			->setFactory(Command\NativeInstallCommand::class)
+			->addTag('console.command', 'native:install');
+
 		$provider = is_string($config->provider) ? $config->provider : NativeAppProvider::class;
 
 		$builder->addDefinition($this->prefix('provider'))

@@ -340,6 +340,52 @@ Electron (Express API :4000)  ←→  HTTP  ←→  PHP (Nette :8100)
 - **Electron → PHP**: HTTP POST to `/_native/api/*` (booted, events, cookie)
 - **Environment**: Electron sets `NATIVEPHP_API_URL`, `NATIVEPHP_SECRET`, `NATIVEPHP_STORAGE_PATH`
 
+## Events
+
+Electron sends events to PHP via `/_native/api/events`. Use the `EventDispatcher` to handle them:
+
+```php
+use NativePHP\Nette\Events\EventDispatcher;
+use NativePHP\Nette\Events\Windows\WindowFocused;
+use NativePHP\Nette\Events\MenuBar\MenuBarClicked;
+
+class MyPresenter extends Presenter
+{
+    public function __construct(
+        private readonly EventDispatcher $events,
+    ) {}
+
+    public function startup(): void
+    {
+        parent::startup();
+        $this->events->on(WindowFocused::class, function ($event) {
+            // Handle window focused
+        });
+    }
+}
+```
+
+**Available event namespaces:**
+
+| Namespace | Events |
+|---|---|
+| `Events\Windows` | WindowShown, WindowBlurred, WindowClosed, WindowFocused, WindowHidden, WindowMaximized, WindowMinimized, WindowResized |
+| `Events\MenuBar` | MenuBarClicked, MenuBarCreated, MenuBarDoubleClicked, MenuBarDroppedFiles, MenuBarHidden, MenuBarRightClicked, MenuBarShown |
+| `Events\PowerMonitor` | PowerStateChanged, ScreenLocked, ScreenUnlocked, Shutdown, SpeedLimitChanged, ThermalStateChanged, UserDidBecomeActive, UserDidResignActive |
+| `Events\AutoUpdater` | CheckingForUpdate, DownloadProgress, Error, UpdateAvailable, UpdateCancelled, UpdateDownloaded, UpdateNotAvailable |
+| `Events\ChildProcess` | ProcessSpawned, ProcessExited, MessageReceived, ErrorReceived, StartupError |
+| `Events\Notifications` | NotificationClicked, NotificationActionClicked, NotificationClosed, NotificationReply |
+
+## CLI Commands
+
+```bash
+php bin/console native:serve              # Start Electron dev server
+php bin/console native:build -p mac-arm64 # Build DMG (mac-arm64, mac-x86, win-x64, linux-x64)
+php bin/console native:install            # Scaffold electron/ directory
+php bin/console native:config             # Show NativePHP config for Electron
+php bin/console native:php-ini            # Show PHP ini settings for Electron
+```
+
 ## Code Quality
 
 ```bash
