@@ -6,6 +6,7 @@ namespace NativePHP\Nette\Presenter;
 
 use Nette\Application\UI\Presenter;
 use Nette\Http\IResponse;
+use NativePHP\Nette\Events\EventDispatcher;
 use NativePHP\Nette\NativeAppProvider;
 
 /**
@@ -16,6 +17,7 @@ class NativeApiPresenter extends Presenter
 {
 	public function __construct(
 		private readonly NativeAppProvider $provider,
+		private readonly EventDispatcher $eventDispatcher,
 	) {
 		parent::__construct();
 	}
@@ -43,13 +45,14 @@ class NativeApiPresenter extends Presenter
 	public function actionEvents(): void
 	{
 		$rawBody = $this->getHttpRequest()->getRawBody();
-		/** @var array{event?: string, payload?: list<mixed>} $body */
+		/** @var array{event?: string, payload?: array<string, mixed>} $body */
 		$body = json_decode($rawBody ?? '{}', true, 512, JSON_THROW_ON_ERROR);
 
 		$event = $body['event'] ?? null;
+		$payload = $body['payload'] ?? [];
 
 		if ($event !== null) {
-			bdump("NativePHP Event: {$event}", 'NativePHP');
+			$this->eventDispatcher->dispatch($event, $payload);
 		}
 
 		$this->sendJson(['success' => true]);

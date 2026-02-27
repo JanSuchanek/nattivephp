@@ -21,9 +21,9 @@ class NativeAppProvider
 	 */
 	public function boot(): void
 	{
-		$phpPort = (string)
-			($_SERVER['SERVER_PORT'] ??
-			getenv('NATIVEPHP_PHP_PORT') ?: '8000');
+		/** @var string $phpPort */
+		$phpPort = $_SERVER['SERVER_PORT']
+			?? getenv('NATIVEPHP_PHP_PORT') ?: '8000';
 
 		$this->window->open(
 			id: 'main',

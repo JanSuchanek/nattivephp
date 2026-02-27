@@ -47,7 +47,7 @@ class Alert
 			'buttons' => $buttons,
 			'defaultId' => $defaultId,
 			'cancelId' => $cancelId,
-		], fn ($v) => $v !== null));
+		], fn (string|int|array|null $v): bool => $v !== null));
 
 		return isset($result['result']) && is_int($result['result']) ? $result['result'] : 0;
 	}

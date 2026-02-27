@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class NativePhpIniCommand extends Command
 {
-	protected static $defaultName = 'native:php-ini';
+	protected static string $defaultName = 'native:php-ini';
 
 	protected function configure(): void
 	{

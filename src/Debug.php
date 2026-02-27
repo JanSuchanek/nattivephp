@@ -29,16 +29,19 @@ class Debug
 		$this->client->post('debug/log', ['level' => $level, 'message' => $message, 'context' => $context]);
 	}
 
+	/** @param array<string, mixed> $context */
 	public function info(string $message, array $context = []): void
 	{
 		$this->log('info', $message, $context);
 	}
 
+	/** @param array<string, mixed> $context */
 	public function warning(string $message, array $context = []): void
 	{
 		$this->log('warning', $message, $context);
 	}
 
+	/** @param array<string, mixed> $context */
 	public function error(string $message, array $context = []): void
 	{
 		$this->log('error', $message, $context);

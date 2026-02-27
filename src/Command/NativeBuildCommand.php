@@ -25,8 +25,15 @@ class NativeBuildCommand extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
+		/** @var string $platform */
 		$platform = $input->getOption('platform');
-		$projectDir = (string) getcwd();
+		$projectDir = getcwd();
+
+		if ($projectDir === false) {
+			$output->writeln('<error>Cannot determine working directory.</error>');
+			return Command::FAILURE;
+		}
+
 		$electronDir = $projectDir . '/electron';
 
 		if (!is_dir($electronDir)) {

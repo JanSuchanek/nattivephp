@@ -63,7 +63,12 @@ class System
 	{
 		$result = $this->client->get('system/printers');
 
-		return isset($result['printers']) && is_array($result['printers']) ? $result['printers'] : [];
+		/** @var array<int, array<string, mixed>> $printers */
+		$printers = isset($result['printers']) && is_array($result['printers'])
+			? $result['printers']
+			: [];
+
+		return $printers;
 	}
 
 	/**

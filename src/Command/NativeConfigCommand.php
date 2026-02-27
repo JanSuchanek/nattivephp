@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class NativeConfigCommand extends Command
 {
-	protected static $defaultName = 'native:config';
+	protected static string $defaultName = 'native:config';
 
 	public function __construct(
 		private readonly string $configFile,
@@ -29,7 +29,7 @@ class NativeConfigCommand extends Command
 		$config = [];
 		if (file_exists($this->configFile)) {
 			$neon = Neon::decodeFile($this->configFile);
-			$config = $neon['nativephp'] ?? $neon ?? [];
+			$config = is_array($neon) ? ($neon['nativephp'] ?? $neon) : [];
 		}
 
 		$output->write(json_encode($config, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
