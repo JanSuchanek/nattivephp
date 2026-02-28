@@ -45,10 +45,13 @@ class Client
 			return [];
 		}
 
-		/** @var array<string, mixed> $decoded */
-		$decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
-
-		return $decoded;
+		try {
+			/** @var array<string, mixed> $decoded */
+			$decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+			return $decoded;
+		} catch (\JsonException) {
+			return [];
+		}
 	}
 
 	/**
@@ -65,10 +68,13 @@ class Client
 			return [];
 		}
 
-		/** @var array<string, mixed> $decoded */
-		$decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
-
-		return $decoded;
+		try {
+			/** @var array<string, mixed> $decoded */
+			$decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+			return $decoded;
+		} catch (\JsonException) {
+			return [];
+		}
 	}
 
 	/**
